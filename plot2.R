@@ -1,7 +1,6 @@
 ## Getting full dataset
-library(readr)
-data_full <- read_delim("C:/Users/yckoong/Desktop/exdata_2Fdata%2Fhousehold_power_consumption/household_power_consumption.txt", 
-                        ";", escape_double = FALSE, trim_ws = TRUE)
+data_full <- read.csv("C:/Users/yckoong/Desktop/exdata_2Fdata%2Fhousehold_power_consumption/household_power_consumption.txt", header=T, sep=';', na.strings="?", 
+                      nrows=2075259, check.names=F, stringsAsFactors=F, comment.char="", quote='\"')
 data_full$Date <- as.Date(data_full$Date, format="%d/%m/%Y")
 
 ## Subsetting the data
@@ -13,6 +12,7 @@ datetime <- paste(as.Date(data_sub$Date), data_sub$Time)
 data_sub$Datetime <- as.POSIXct(datetime)
 
 ## Plot 2
-plot(data_sub$Global_active_power~data_sub$Datetime, type="1", ylab="Global Active Power (kilowatts)", xlab="")
+plot(data_sub$Global_active_power~data_sub$Datetime, type="l",
+     ylab="Global Active Power (kilowatts)", xlab="")
 dev.copy(png, file="plot2.png", height=480, width=480)
 dev.off()
